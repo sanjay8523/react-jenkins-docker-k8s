@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  app:
+    container_name: knote-app
+    image: learnitguide/knotejs:1.0
+    environment:
+      MONGO_URL: mongodb://mongo_db_host:27017/dev
+      REDIS_URL: redis://redis_host:6379
+    ports:
+      - "80:3000"
+    depends_on:
+      - mongo
+      - redis
+    links:
+      - mongo:mongo_db_host
+      - redis:redis_host
+
+  mongo:
+    container_name: knote-mongo
+    image: mongo
+
+  redis:
+    container_name: knote-redis
+    image: redis
